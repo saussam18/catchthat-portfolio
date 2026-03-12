@@ -4,6 +4,8 @@ import Link from "next/link";
 const footerLinks = [
   { href: "#roster", label: "The Roster" },
   { href: "#about", label: "About" },
+  { href: "/terms", label: "Terms" },
+  { href: "/privacy", label: "Privacy" },
   { href: "mailto:sause@catchthat.io", label: "Contact" },
 ];
 
