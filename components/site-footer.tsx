@@ -18,7 +18,7 @@ export function SiteFooter() {
               CatchThat
             </span>
           </Link>
-          <span className="text-sm text-[var(--muted)]">Washington, USA</span>
+          <span className="text-sm text-[var(--muted)]">Greater Seattle Area</span>
         </div>
 
         <div className="flex flex-wrap gap-5 text-sm text-[var(--muted)]">

@@ -16,11 +16,11 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://catchthat.io"),
-  title: "CatchThat | Portfolio",
+  title: "CatchThat",
   description:
     "CatchThat is building focused software products across internal tools, task management, sports data, and fan experiences.",
   openGraph: {
-    title: "CatchThat | Portfolio",
+    title: "CatchThat",
     description:
       "Explore the CatchThat portfolio: VocabHQ, Unpile, CapStack, and Playbook.",
     url: "https://catchthat.io",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CatchThat | Portfolio",
+    title: "CatchThat",
     description:
       "CatchThat is building focused software products across internal tools, task management, sports data, and fan experiences.",
     images: ["/logo.png"],
