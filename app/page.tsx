@@ -4,7 +4,7 @@ import { Github, Linkedin } from "lucide-react";
 
 type Product = {
   badge: string;
-  statusTone: "building" | "idea" | "pending";
+  statusTone: "public" | "building" | "onhold" | "idea";
   logo: string | null;
   logoAlt: string | null;
   logoText?: string;
@@ -14,6 +14,14 @@ type Product = {
   description: string;
   meta: string[];
   note: string | null;
+  url?: string;
+};
+
+const statusColors: Record<Product["statusTone"], { bg: string; text: string }> = {
+  public: { bg: "rgba(34, 197, 94, 0.12)", text: "#16a34a" },
+  building: { bg: "rgba(216, 155, 29, 0.12)", text: "#d89b1d" },
+  onhold: { bg: "rgba(239, 68, 68, 0.12)", text: "#ef4444" },
+  idea: { bg: "rgba(59, 130, 246, 0.12)", text: "#3b82f6" },
 };
 
 const products: Product[] = [
@@ -25,10 +33,25 @@ const products: Product[] = [
     accent: "#f4a300",
     accentSoft: "rgba(244, 163, 0, 0.14)",
     name: "VocabHQ",
+    url: "https://www.vocabhq.com",
     description:
       "Your company's language, defined. A shared dictionary for the acronyms, terms, and definitions your team needs to know.",
     meta: ["Company glossary", "Shared definitions", "Team onboarding"],
     note: null,
+  },
+  {
+    badge: "On Hold",
+    statusTone: "onhold",
+    logo: "/logo.png",
+    logoAlt: "OffseasonHQ logo",
+    url: "https://www.offseasonhq.com",
+    accent: "#d89b1d",
+    accentSoft: "rgba(216, 155, 29, 0.12)",
+    name: "OffseasonHQ",
+    description:
+      "Roster management tools and games for sports fans, from mock free agency and simulations to deeper front-office play.",
+    meta: ["Sports fans", "Games", "Roster tools"],
+    note: "Waiting on CapStack",
   },
   {
     badge: "Idea Phase",
@@ -56,19 +79,6 @@ const products: Product[] = [
       "A sports contract and salary cap API concept for developers and sports products that need clean cap math underneath.",
     meta: ["API concept", "Sports data", "Idea stage"],
     note: null,
-  },
-  {
-    badge: "Pending",
-    statusTone: "pending",
-    logo: "/logo.png",
-    logoAlt: "OffseasonHQ logo",
-    accent: "#d89b1d",
-    accentSoft: "rgba(216, 155, 29, 0.12)",
-    name: "OffseasonHQ",
-    description:
-      "Roster management tools and games for sports fans, from mock free agency and simulations to deeper front-office play.",
-    meta: ["Sports fans", "Games", "Roster tools"],
-    note: "Waiting on CapStack",
   },
   {
     badge: "Idea Phase",
@@ -127,10 +137,16 @@ export default function HomePage() {
         </div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
-          {products.map((product) => (
-            <article
+          {products.map((product) => {
+            const Wrapper = product.url ? "a" : "div";
+            const wrapperProps = product.url
+              ? { href: product.url, target: "_blank" as const, rel: "noopener noreferrer" }
+              : {};
+            return (
+            <Wrapper
               key={product.name}
-              className="group rounded-[1.4rem] border border-[var(--border)] bg-[var(--surface)] p-9 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)]"
+              {...wrapperProps}
+              className="group block rounded-[1.4rem] border border-[var(--border)] bg-[var(--surface)] p-9 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)]"
               style={{
                 boxShadow:
                   product.statusTone === "idea"
@@ -138,9 +154,9 @@ export default function HomePage() {
                     : `0 0 0 1px ${product.accentSoft} inset`,
               }}
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start justify-between gap-2">
                 <div
-                  className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]"
+                  className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]"
                   style={{
                     backgroundColor: product.accentSoft,
                   }}
@@ -149,9 +165,9 @@ export default function HomePage() {
                     <Image
                       src={product.logo}
                       alt={product.logoAlt ?? `${product.name} logo`}
-                      width={40}
-                      height={40}
-                      className="h-10 w-10 object-contain"
+                      width={56}
+                      height={56}
+                      className="h-14 w-14 object-cover"
                     />
                   ) : (
                     <span className="font-[var(--font-display)] text-lg font-bold uppercase tracking-[0.08em] text-[var(--muted)]">
@@ -159,26 +175,34 @@ export default function HomePage() {
                     </span>
                   )}
                 </div>
+                <div className="flex items-center gap-1.5">
+                {product.note && (
+                  <span
+                    className="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.14em]"
+                    style={{
+                      backgroundColor: statusColors[product.statusTone].bg,
+                      color: statusColors[product.statusTone].text,
+                    }}
+                  >
+                    {product.note}
+                  </span>
+                )}
                 <span
                   className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
                   style={{
-                    backgroundColor:
-                      product.statusTone === "pending"
-                        ? "rgba(59, 130, 246, 0.12)"
-                        : product.accentSoft,
-                    color:
-                      product.statusTone === "pending" ? "#3b82f6" : product.accent,
+                    backgroundColor: statusColors[product.statusTone].bg,
+                    color: statusColors[product.statusTone].text,
                   }}
                 >
                   <span
                     className="h-2 w-2 rounded-full"
                     style={{
-                      backgroundColor:
-                        product.statusTone === "pending" ? "#3b82f6" : product.accent,
+                      backgroundColor: statusColors[product.statusTone].text,
                     }}
                   />
                   {product.badge}
                 </span>
+                </div>
               </div>
 
               <h3 className="mt-6 font-[var(--font-display)] text-3xl font-bold tracking-[-0.02em] text-[var(--text)]">
@@ -194,19 +218,9 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {product.note ? (
-                <div
-                  className="mt-5 inline-flex rounded-lg px-3 py-2 text-sm"
-                  style={{
-                    backgroundColor: product.accentSoft,
-                    color: product.accent,
-                  }}
-                >
-                  {product.note}
-                </div>
-              ) : null}
-            </article>
-          ))}
+            </Wrapper>
+            );
+          })}
         </div>
       </section>
 
