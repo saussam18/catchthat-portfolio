@@ -44,7 +44,7 @@ const products: Product[] = [
     statusTone: "onhold",
     logo: "/logo.png",
     logoAlt: "OffseasonHQ logo",
-    url: "https://www.offseasonhq.com",
+    url: "https://www.offseasonhq.io",
     accent: "#d89b1d",
     accentSoft: "rgba(216, 155, 29, 0.12)",
     name: "OffseasonHQ",
