@@ -252,8 +252,9 @@ export default function HomePage() {
               <p>
                 CatchThat is a solo software studio run by Sam Sausville in
                 Washington. Sam works as a Senior Software Engineer at
-                Microsoft and is building CatchThat as a focused long-term
-                product company.
+                NexHealth and formerly held the same title at Microsoft. He
+                builds products fast with AI, and CatchThat is the company
+                that holds them.
               </p>
               <p>
                 The work sits at the intersection of SaaS, developer tools, and
